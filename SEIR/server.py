@@ -87,15 +87,15 @@ def index():
                               beta=BETA, sigma=SIGMA, gamma=GAMMA,
                               G_Q=G_quarantine,
                               initE=INIT_EXPOSED)
-    checkpoints = {'t': [10, 30],
+    checkpoints = {'t': [5, 30],
                    'G': [G_quarantine, G_baseline],
-                   'p': [P_GLOBALINTXN, P_GLOBALINTXN],
+                   'p': [0.5 * P_GLOBALINTXN, P_GLOBALINTXN],
                    'theta_E': [0.02, 0.02],
                    'theta_I': [0.02, 0.02],
-                   'phi_E': [0.2, 0.2],
+                   'phi_E': [0.5, 0.5],
                    'phi_I': [0.2, 0.2]}
     T = int(request_body['T']) or 30
-    model.run(T=T)
+    model.run(T=T, checkpoints=checkpoints)
     model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_percentages=False)
     fig, ax =model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_percentages=False)
     fig.savefig('test.png')
