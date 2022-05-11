@@ -7,7 +7,7 @@ from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from seirsplus.utilities import *
 
-from models import *
+from models0511 import *
 from networks0217 import *
 from sim_loops import *
 
@@ -83,7 +83,7 @@ def index():
     BETA = 1 / infectiousPeriod * R0
     P_GLOBALINTXN = 0.2
     #############################################
-    model = SEIRSNetworkModel(G=G_baseline, p=P_GLOBALINTXN,
+    model = SEIRSNetworkModel0511(G=G_baseline, p=P_GLOBALINTXN,
                               beta=BETA, sigma=SIGMA, gamma=GAMMA,
                               G_Q=G_quarantine,
                               initE=INIT_EXPOSED)
