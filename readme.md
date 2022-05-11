@@ -20,9 +20,9 @@ pip install scipy
 
 | 变量名                   | 类型  | 示例 | 描述                   |
 | ------------------------ | ----- | ---- | ---------------------- |
-| MEAN_INTRACOHORT_DEGREE  | float | 18   | 社群网络内节点degree   |
+| MEAN_INTRACOHORT_DEGREE  | int | 18   | 社群网络内节点degree   |
 | PCT_CONTACTS_INTERCOHORT | float | 0.20 | 社群网络接触后感染可能 |
-| INIT_EXPOSED             | float | 30   | 初始感染节点数         |
+| INIT_EXPOSED             | int | 30   | 初始感染节点数         |
 | R0                       | float | 2.5  | 描述感染程度的值       |
 | T                        | int   | 30   | 运行时间(day)          |
 
