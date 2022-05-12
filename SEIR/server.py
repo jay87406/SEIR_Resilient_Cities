@@ -49,6 +49,11 @@ def index():
     PCT_CONTACTS_INTERCOHORT = float(request_body['PCT_CONTACTS_INTERCOHORT']) or 0.20
     INIT_EXPOSED = int(request_body['INIT_EXPOSED']) or 30
 
+    # 增加隔离时间 与 开始时间
+    isolation_start = int(request_body['isolation_start']) or 5
+    isolation_end = int(request_body['isolation_start']) or 30
+    start_time = str(request_body['isolation_start']) or '2022/03/25'
+
     #-------------------------------
     G_baseline, cohorts, teams = generate_workplace_contact_network_0218(
         num_cohorts=NUM_COHORTS, num_nodes_per_cohort=NUM_NODES_PER_COHORT,
@@ -87,7 +92,7 @@ def index():
                               beta=BETA, sigma=SIGMA, gamma=GAMMA,
                               G_Q=G_quarantine,
                               initE=INIT_EXPOSED)
-    checkpoints = {'t': [5, 30],
+    checkpoints = {'t': [isolation_start, isolation_end],
                    'G': [G_quarantine, G_baseline],
                    'p': [0.5 * P_GLOBALINTXN, P_GLOBALINTXN],
                    'theta_E': [0.02, 0.02],
@@ -96,8 +101,8 @@ def index():
                    'phi_I': [0.2, 0.2]}
     T = int(request_body['T']) or 30
     model.run(T=T, checkpoints=checkpoints)
-    model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=None)
-    fig, ax =model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=None)
+    model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=True, vlines=checkpoints['t'], vline_colors=['blue', 'green'], vline_styles=['dashed', 'dotted'], vline_labels=['隔离政策开始', '隔离政策结束'], start_time=start_time)
+    fig, ax =model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=True, vlines=checkpoints['t'], vline_colors=['blue', 'green'], vline_styles=['dashed', 'dotted'], vline_labels=['隔离政策开始', '隔离政策结束'], start_time=start_time)
     fig.savefig('test.png')
     img_stream = return_img_stream('test.png')
     return jsonify({
