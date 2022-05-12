@@ -96,8 +96,8 @@ def index():
                    'phi_I': [0.2, 0.2]}
     T = int(request_body['T']) or 30
     model.run(T=T, checkpoints=checkpoints)
-    model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_percentages=False)
-    fig, ax =model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_percentages=False)
+    model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=None)
+    fig, ax =model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=None)
     fig.savefig('test.png')
     img_stream = return_img_stream('test.png')
     return jsonify({
