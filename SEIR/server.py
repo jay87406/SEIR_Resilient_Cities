@@ -51,8 +51,8 @@ def index():
 
     # 增加隔离时间 与 开始时间
     isolation_start = int(request_body['isolation_start']) or 5
-    isolation_end = int(request_body['isolation_start']) or 30
-    start_time = str(request_body['isolation_start']) or '2022/03/25'
+    isolation_end = int(request_body['isolation_end']) or 30
+    start_time = str(request_body['start_time']) or '2022/03/25'
 
     #-------------------------------
     G_baseline, cohorts, teams = generate_workplace_contact_network_0218(
