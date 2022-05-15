@@ -50,9 +50,27 @@ def index():
     INIT_EXPOSED = int(request_body['INIT_EXPOSED']) or 30
 
     # 增加隔离时间 与 开始时间
-    isolation_start = int(request_body['isolation_start']) or 5
-    isolation_end = int(request_body['isolation_end']) or 30
+    isolation_start_str = str(request_body['isolation_start']) or '2022/03/30'
+    isolation_end_str = str(request_body['isolation_end']) or '2022/04/30'
     start_time = str(request_body['start_time']) or '2022/03/25'
+
+    # 修改原120行 T = int(request_body['T']) or 30 变成str
+    end_time = str(request_body['end_time']) or '2022/04/30'
+
+    #-------------------------------加入日期计算功能
+    from datetime import datetime
+
+    isolation_start_date = datetime.strptime(isolation_start_str, '%Y/%m/%d').date()
+    isolation_end_date = datetime.strptime(isolation_end_str, '%Y/%m/%d').date()
+    start_time_date = datetime.strptime(start_time, '%Y/%m/%d').date()
+    end_time_date = datetime.strptime(end_time, '%Y/%m/%d').date()
+
+    # 隔离开始时间计算
+    isolation_start = int((isolation_start_date - start_time_date).days)
+    # 隔离结束时间计算
+    isolation_end = int((isolation_end_date - start_time_date).days)
+    # 模拟时间 T 计算
+    T = int((end_time_date - start_time_date).days)
 
     #-------------------------------
     G_baseline, cohorts, teams = generate_workplace_contact_network_0218(
@@ -99,7 +117,7 @@ def index():
                    'theta_I': [0.02, 0.02],
                    'phi_E': [0.5, 0.5],
                    'phi_I': [0.2, 0.2]}
-    T = int(request_body['T']) or 30
+    #T = int(request_body['T']) or 30
     model.run(T=T, checkpoints=checkpoints)
     model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=True, vlines=checkpoints['t'], vline_colors=['blue', 'green'], vline_styles=['dashed', 'dotted'], vline_labels=['隔离政策开始', '隔离政策结束'], start_time=start_time)
     fig, ax =model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=True, vlines=checkpoints['t'], vline_colors=['blue', 'green'], vline_styles=['dashed', 'dotted'], vline_labels=['隔离政策开始', '隔离政策结束'], start_time=start_time)
