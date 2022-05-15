@@ -1241,8 +1241,9 @@ class SEIRSNetworkModel0511():
                 ax.plot(numpy.ma.masked_where(Q_Iseries <= 0, self.tseries),
                         numpy.ma.masked_where(Q_Iseries <= 0, Q_Iseries), color=color_Q_I, label='$Q_I$', zorder=6)
         if (any(Iseries) and plot_I == 'line'):
+            pyplot.rcParams['font.sans-serif'] = 'SimHei'
             ax.plot(numpy.ma.masked_where(Iseries <= 0, self.tseries), numpy.ma.masked_where(Iseries <= 0, Iseries),
-                    color=color_I, label='$I$', zorder=6)
+                    color=color_I, label='感染人数', zorder=6)
         if (any(Sseries) and plot_S == 'line'):
             ax.plot(numpy.ma.masked_where(Sseries <= 0, self.tseries), numpy.ma.masked_where(Sseries <= 0, Sseries),
                     color=color_S, label='$S$', zorder=6)
