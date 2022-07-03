@@ -1223,10 +1223,13 @@ class SEIRSNetworkModel0511():
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Draw the line variables:
+        # 0703 修改
         # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Fseries = numpy.array(
+            [2270,2676,3500,4477,5982,5653,4502,6311,8226,9006,13354,17077,19922,21222,23624,24943,26087,23342,26330,27719,23072,23513,24820,22248,20416,18901,18495,17629,23370,21058,19455,16980,13562,10622,15032,10181,7872,7333,5669,4982,4651,4269,4214,3975,3947,3014,1487,1449,2096,1681,1369,938,823,855,719,860,868,622,558,480,387,338,264,170,99,70,27,15,16,13,15,16,8,10,15,9,11,16,29,37,17,15,16,4,7,9,13,9,8,9,3,0,0,4,0,0,0,0
+])
         if (any(Fseries) and plot_F == 'line'):
-            ax.plot(numpy.ma.masked_where(Fseries <= 0, self.tseries), numpy.ma.masked_where(Fseries <= 0, Fseries),
-                    color=color_F, label='$F$', zorder=6)
+            ax.plot(Fseries, color=color_F, label='$COVID-19 Data$', zorder=6)
         if (any(Eseries) and plot_E == 'line'):
             ax.plot(numpy.ma.masked_where(Eseries <= 0, self.tseries), numpy.ma.masked_where(Eseries <= 0, Eseries),
                     color=color_E, label='$E$', zorder=6)
@@ -1242,7 +1245,7 @@ class SEIRSNetworkModel0511():
                         numpy.ma.masked_where(Q_Iseries <= 0, Q_Iseries), color=color_Q_I, label='$Q_I$', zorder=6)
         if (any(Iseries) and plot_I == 'line'):
             pyplot.rcParams['font.sans-serif'] = 'SimHei'
-            ax.plot(numpy.ma.masked_where(Iseries <= 0, self.tseries), numpy.ma.masked_where(Iseries <= 0, Iseries),
+            ax.plot(numpy.ma.masked_where(Iseries <= 0, self.tseries), numpy.ma.masked_where(Iseries <= 0, Iseries*1000),
                     color=color_I, label='感染人数', zorder=6)
         if (any(Sseries) and plot_S == 'line'):
             ax.plot(numpy.ma.masked_where(Sseries <= 0, self.tseries), numpy.ma.masked_where(Sseries <= 0, Sseries),
@@ -1275,7 +1278,7 @@ class SEIRSNetworkModel0511():
         ax.set_ylim(0, ylim)
         DT = datetime.strptime(start_time, '%Y/%m/%d').date()
         ax.set_xticklabels([DT + timedelta(days=x) for x in ax.get_xticks()])
-        ax.set_yticklabels(['{:.0f}'.format(y*100) for y in ax.get_yticks()])
+        #ax.set_yticklabels(['{:.0f}'.format(y*100) for y in ax.get_yticks()])
 
         if (plot_percentages):
             #ax.set_yticklabels(['{:,.2%}'.format(y) for y in ax.get_yticks()])
