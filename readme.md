@@ -1,4 +1,8 @@
+执行main.py即可运行
+
 # 环境
+
+pip install seirsplus
 
 pip install flask
 
