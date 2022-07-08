@@ -37,16 +37,3 @@ pip install scipy
     T = int(request_body['T']) or 30
 ```
 
-## 输出
-
-会输出运算后的图
-
-这边我是用你之前回传给我server.py里方式改的，我不确定你之前前端方式是怎么GET到图的
-
-```python
-	img_stream = return_img_stream('test.png')
-    return jsonify({
-        "img": img_stream
-    })
-```
-
