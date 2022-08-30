@@ -7,7 +7,7 @@ from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from seirsplus.utilities import *
 
-from models0511 import *
+from models05112 import *
 from networks0217 import *
 from sim_loops import *
 
@@ -118,9 +118,55 @@ def index():
                    'phi_E': [0.5, 0.5],
                    'phi_I': [0.2, 0.2]}
     #T = int(request_body['T']) or 30
+
+    # --------------------------
+    # 加入basic模型
+    SIGMA = SIGMA[0]
+    GAMMA = GAMMA[0]
+    MU_I = MU_H[0]
+    R0 = R0
+    BETA = BETA[0]
+    model_basic = SEIRSModel(initN=NUM_NODES_PER_COHORT * 10,
+                             beta=BETA,
+                             sigma=SIGMA,
+                             gamma=GAMMA,
+                             mu_I=MU_I,
+                             mu_0=0,
+                             nu=0,
+                             xi=0,
+                             beta_Q=0.5 * (BETA),
+                             sigma_Q=SIGMA,
+                             gamma_Q=GAMMA,
+                             mu_Q=MU_I,
+                             theta_E=0,
+                             theta_I=0,
+                             psi_E=1.0,
+                             psi_I=1.0,
+                             initI=1,
+                             initE=0,
+                             initQ_E=0,
+                             initQ_I=0,
+                             initR=0,
+                             initF=0)
+    checkpoints_basic = {'t': [isolation_start, isolation_end],
+                         'beta': [(BETA) * 0.3, BETA],
+                         'theta_E': [0.02, 0.02],
+                         'theta_I': [0.02, 0.02]
+                         }
+    model_basic.run(T=100, checkpoints=checkpoints_basic)
+    model_basic.figure_infections(vlines=checkpoints_basic['t'])
+
+    # -----------------------------
+
     model.run(T=T, checkpoints=checkpoints)
-    model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=True, vlines=checkpoints['t'], vline_colors=['blue', 'green'], vline_styles=['dashed', 'dotted'], vline_labels=['隔离政策开始', '隔离政策结束'], start_time=start_time)
-    fig, ax =model.figure_basic(plot_E=True, plot_S=True, plot_R=True, plot_F=False, plot_Q_E=False, plot_Q_I=False, legend=True, vlines=checkpoints['t'], vline_colors=['blue', 'green'], vline_styles=['dashed', 'dotted'], vline_labels=['隔离政策开始', '隔离政策结束'], start_time=start_time)
+
+    model.figure_basic(plot_S=False, plot_R=True, plot_Q_E=False, plot_Q_I=False, legend=True, vlines=checkpoints['t'],
+                       vline_colors=['blue', 'green'], vline_styles=['dashed', 'dotted'],
+                       vline_labels=['隔离政策开始', '隔离政策结束'], start_time=start_time, simulation_area='Shanghai')
+    fig, ax = model.figure_basic(plot_S=False, plot_R=True, plot_Q_E=False, plot_Q_I=False, legend=True,
+                                 vlines=checkpoints['t'], vline_colors=['blue', 'green'],
+                                 vline_styles=['dashed', 'dotted'], vline_labels=['隔离政策开始', '隔离政策结束'],
+                                 start_time=start_time, simulation_area='Shanghai')
     fig.savefig('test.png')
     img_stream = return_img_stream('test.png')
     return jsonify({
