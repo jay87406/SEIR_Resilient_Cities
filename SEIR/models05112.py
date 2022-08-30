@@ -498,6 +498,7 @@ class SEIRSModel():
                 ax.plot(numpy.ma.masked_where(Q_Iseries <= 0, self.tseries),
                         numpy.ma.masked_where(Q_Iseries <= 0, Q_Iseries), color=color_Q_I, label='$Q_I$', zorder=6)
         if (any(Iseries) and plot_I == 'line'):
+            pyplot.rcParams['font.sans-serif'] = 'SimHei'
             ax.plot(numpy.ma.masked_where(Iseries <= 0, self.tseries), numpy.ma.masked_where(Iseries <= 0, Iseries),
                     color=color_I, label='$I$', zorder=6)
         if (any(Sseries) and plot_S == 'line'):
@@ -1964,6 +1965,7 @@ class SEIRSNetworkModel0511():
         # 修改0630
         # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         from datetime import datetime, timedelta
+        pyplot.rcParams['font.sans-serif'] = 'SimHei'
         ax.set_xlabel('模拟时间', size=24)
         ax.set_ylabel('感染人口' if plot_percentages else '感染人口', size=24)
         ax.set_xlim(0, (max(self.tseries) if not xlim else xlim))
