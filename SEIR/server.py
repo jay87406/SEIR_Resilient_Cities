@@ -45,6 +45,8 @@ def index():
 
     #-------------------------------输入
 
+    simulation_area = str(request_body['simulation_area']) or 'Shanghai'
+
     MEAN_INTRACOHORT_DEGREE = int(request_body['MEAN_INTRACOHORT_DEGREE']) or 18
     PCT_CONTACTS_INTERCOHORT = float(request_body['PCT_CONTACTS_INTERCOHORT']) or 0.20
     INIT_EXPOSED = int(request_body['INIT_EXPOSED']) or 30

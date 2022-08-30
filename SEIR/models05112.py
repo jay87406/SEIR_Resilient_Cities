@@ -402,7 +402,7 @@ class SEIRSModel():
             # timefile = time.strftime("%H-%M", time.localtime())
             # os.makedirs('./'+time_m_d+'/'+timefile, exist_ok=True)
 
-            # numpy.savetxt(r'0730.txt', test, fmt='%d')
+            numpy.savetxt(r'0730.txt', test, fmt='%d')
             # numpy.savetxt(r'./'+time_m_d+'/'+timefile+'/0730.txt', test, fmt='%d')
             # 这个用于显示plot的
             a = numpy.loadtxt('0730.txt', dtype=int)
