@@ -155,7 +155,7 @@ def index():
                          'theta_E': [0.02, 0.02],
                          'theta_I': [0.02, 0.02]
                          }
-    model_basic.run(T=100, checkpoints=checkpoints_basic)
+    model_basic.run(T=T, checkpoints=checkpoints_basic)
     model_basic.figure_infections(vlines=checkpoints_basic['t'])
 
     # -----------------------------
