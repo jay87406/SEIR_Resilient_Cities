@@ -11,6 +11,7 @@ import scipy.integrate
 import time
 import os
 
+from matplotlib import font_manager as fm, rcParams
 
 ########################################################
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
@@ -1936,13 +1937,13 @@ class SEIRSNetworkModel0511():
             #Iseries = moving_average_I(interval=Iseries, window_size=5)
             # -------
             ax.plot(numpy.ma.masked_where(Iseries <= 0, self.tseries),
-                    numpy.ma.masked_where(Iseries <= 0, Iseries*1000),
+                    numpy.ma.masked_where(Iseries <= 0, Iseries*100),
                     color=color_I, label='$模拟感染人数$', zorder=6)
         #if (any(Sseries) and plot_S == 'line'):
         #   ax.plot(numpy.ma.masked_where(Sseries <= 0, self.tseries), numpy.ma.masked_where(Sseries <= 0, Sseries),
         #            color=color_S, label='$S$', zorder=6)
         if (any(Sseries) and plot_S == 'line'):
-            ax.plot(Sseries*1000, color=color_S, label='$EX_SEIR$', zorder=6)
+            ax.plot(Sseries*100, color=color_S, label='$EX_SEIR$', zorder=6)
         if (any(Rseries) and plot_R == 'line'):
             ax.plot(numpy.ma.masked_where(Rseries <= 0, self.tseries), numpy.ma.masked_where(Rseries <= 0, Rseries),
                     color=color_R, label='$R$', zorder=6)
